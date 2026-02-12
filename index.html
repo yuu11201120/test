@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShiftSync - シフト調整アプリ</title>
+  <title>TelecomWatch - 通信キャリアニュース</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,30 +12,40 @@
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="logo">
-          <span class="logo-icon">S</span>
-          <span class="logo-text">ShiftSync</span>
+          <span class="logo-icon">T</span>
+          <span class="logo-text">TelecomWatch</span>
         </div>
       </div>
       <nav class="sidebar-nav">
-        <button class="nav-item active" data-view="calendar">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span>カレンダー</span>
+        <button class="nav-item active" data-filter="all">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span>すべてのニュース</span>
         </button>
-        <button class="nav-item" data-view="members">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          <span>メンバー</span>
+        <button class="nav-item" data-filter="docomo">
+          <span class="carrier-dot" style="background: #c41e3a"></span>
+          <span>NTTドコモ</span>
         </button>
-        <button class="nav-item" data-view="shifts">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span>シフト枠</span>
+        <button class="nav-item" data-filter="au">
+          <span class="carrier-dot" style="background: #ee7800"></span>
+          <span>au / KDDI</span>
         </button>
-        <button class="nav-item" data-view="stats">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          <span>統計</span>
+        <button class="nav-item" data-filter="softbank">
+          <span class="carrier-dot" style="background: #001c58"></span>
+          <span>ソフトバンク</span>
+        </button>
+        <button class="nav-item" data-filter="rakuten">
+          <span class="carrier-dot" style="background: #bf0000"></span>
+          <span>楽天モバイル</span>
+        </button>
+        <div class="nav-divider"></div>
+        <button class="nav-item" data-filter="bookmarks">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <span>ブックマーク</span>
+          <span class="badge" id="bookmarkCount">0</span>
         </button>
       </nav>
       <div class="sidebar-footer">
-        <div class="current-date" id="currentDate"></div>
+        <div class="last-updated" id="lastUpdated"></div>
       </div>
     </aside>
 
@@ -46,94 +56,47 @@
         <button class="menu-toggle" id="menuToggle">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
-        <h1 class="page-title" id="pageTitle">カレンダー</h1>
+        <h1 class="page-title" id="pageTitle">すべてのニュース</h1>
         <div class="header-actions">
-          <button class="btn btn-primary" id="addShiftBtn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            シフト追加
-          </button>
+          <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="ニュースを検索..." id="searchInput" class="search-input">
+          </div>
         </div>
       </header>
 
-      <!-- Calendar View -->
-      <section class="view active" id="calendarView">
-        <div class="calendar-controls">
-          <button class="btn btn-ghost" id="prevMonth">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <h2 class="calendar-month" id="calendarMonth"></h2>
-          <button class="btn btn-ghost" id="nextMonth">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <button class="btn btn-outline" id="todayBtn">今日</button>
-        </div>
-        <div class="calendar">
-          <div class="calendar-header">
-            <div class="cal-day-name sun">日</div>
-            <div class="cal-day-name">月</div>
-            <div class="cal-day-name">火</div>
-            <div class="cal-day-name">水</div>
-            <div class="cal-day-name">木</div>
-            <div class="cal-day-name">金</div>
-            <div class="cal-day-name sat">土</div>
-          </div>
-          <div class="calendar-grid" id="calendarGrid"></div>
-        </div>
-      </section>
+      <!-- Category Filter -->
+      <div class="category-bar" id="categoryBar">
+        <button class="category-chip active" data-category="all">すべて</button>
+        <button class="category-chip" data-category="plan">料金プラン</button>
+        <button class="category-chip" data-category="5g">5G / 通信</button>
+        <button class="category-chip" data-category="service">新サービス</button>
+        <button class="category-chip" data-category="trouble">障害情報</button>
+        <button class="category-chip" data-category="device">端末</button>
+        <button class="category-chip" data-category="business">経営・業績</button>
+      </div>
 
-      <!-- Members View -->
-      <section class="view" id="membersView">
-        <div class="view-header">
-          <h2>メンバー管理</h2>
-          <button class="btn btn-primary" id="addMemberBtn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            メンバー追加
-          </button>
-        </div>
-        <div class="members-grid" id="membersGrid"></div>
-      </section>
+      <!-- News Feed -->
+      <section class="news-feed" id="newsFeed"></section>
 
-      <!-- Shift Types View -->
-      <section class="view" id="shiftsView">
-        <div class="view-header">
-          <h2>シフト枠設定</h2>
-          <button class="btn btn-primary" id="addShiftTypeBtn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            シフト枠追加
-          </button>
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <div class="empty-state-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         </div>
-        <div class="shift-types-list" id="shiftTypesList"></div>
-      </section>
-
-      <!-- Stats View -->
-      <section class="view" id="statsView">
-        <div class="view-header">
-          <h2>統計情報</h2>
-          <div class="stats-period">
-            <select id="statsPeriod" class="select">
-              <option value="month">今月</option>
-              <option value="week">今週</option>
-            </select>
-          </div>
-        </div>
-        <div class="stats-cards" id="statsCards"></div>
-        <div class="stats-detail">
-          <h3>メンバー別シフト回数</h3>
-          <div class="stats-chart" id="statsChart"></div>
-        </div>
-      </section>
+        <h3>ニュースが見つかりません</h3>
+        <p>検索条件やフィルターを変更してみてください</p>
+      </div>
     </main>
   </div>
 
-  <!-- Modal Overlay -->
+  <!-- Article Detail Modal -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal" id="modal">
       <div class="modal-header">
-        <h3 class="modal-title" id="modalTitle"></h3>
         <button class="modal-close" id="modalClose">&times;</button>
       </div>
       <div class="modal-body" id="modalBody"></div>
-      <div class="modal-footer" id="modalFooter"></div>
     </div>
   </div>
 
