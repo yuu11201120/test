@@ -3,323 +3,340 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KDDI株式会社</title>
+  <title>StayEase - ホテル予約</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Header -->
-  <header class="header">
+  <header class="header" id="header">
     <div class="header-inner">
-      <div class="header-left">
-        <a href="#" class="logo" aria-label="KDDI">
-          <span class="logo-mark">KDDI</span>
-        </a>
-      </div>
+      <a href="#" class="logo" id="logoLink">
+        <span class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </span>
+        <span class="logo-text">StayEase</span>
+      </a>
       <nav class="header-nav" id="headerNav">
-        <ul class="nav-list">
-          <li class="nav-list-item has-dropdown">
-            <a href="#" class="nav-link">個人のお客さま</a>
-            <div class="dropdown">
-              <a href="#" class="dropdown-link">au</a>
-              <a href="#" class="dropdown-link">UQ mobile</a>
-              <a href="#" class="dropdown-link">povo</a>
-              <a href="#" class="dropdown-link">auひかり</a>
-              <a href="#" class="dropdown-link">au PAY</a>
-            </div>
-          </li>
-          <li class="nav-list-item has-dropdown">
-            <a href="#" class="nav-link">法人のお客さま</a>
-            <div class="dropdown">
-              <a href="#" class="dropdown-link">モバイル</a>
-              <a href="#" class="dropdown-link">ネットワーク</a>
-              <a href="#" class="dropdown-link">クラウド</a>
-              <a href="#" class="dropdown-link">IoT</a>
-              <a href="#" class="dropdown-link">セキュリティ</a>
-            </div>
-          </li>
-          <li class="nav-list-item"><a href="#corporate" class="nav-link">企業情報</a></li>
-          <li class="nav-list-item"><a href="#ir" class="nav-link">IR情報</a></li>
-          <li class="nav-list-item"><a href="#sustainability" class="nav-link">サステナビリティ</a></li>
-          <li class="nav-list-item"><a href="#news" class="nav-link">ニュースリリース</a></li>
-        </ul>
+        <a href="#" class="nav-link active" data-page="home">ホーム</a>
+        <a href="#" class="nav-link" data-page="search">ホテル検索</a>
+        <a href="#" class="nav-link" data-page="bookings">予約一覧</a>
       </nav>
-      <div class="header-right">
-        <button class="search-toggle" id="searchToggle" aria-label="検索">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
-        <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-        </button>
-      </div>
-    </div>
-    <!-- Search Overlay -->
-    <div class="search-overlay" id="searchOverlay">
-      <div class="search-overlay-inner">
-        <input type="text" class="search-overlay-input" placeholder="キーワードを入力してください" id="searchInput">
-        <button class="search-overlay-close" id="searchClose" aria-label="閉じる">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+        <span class="menu-bar"></span>
+        <span class="menu-bar"></span>
+        <span class="menu-bar"></span>
+      </button>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-    <div class="hero-slider" id="heroSlider">
-      <div class="hero-slide active" data-slide="0">
-        <div class="hero-slide-bg hero-bg-1"></div>
-        <div class="hero-slide-content">
-          <span class="hero-label">KDDI VISION 2030</span>
-          <h2 class="hero-title">「つなぐチカラ」を進化させ、<br>誰もが思いを実現できる社会をつくる。</h2>
-          <p class="hero-description">通信とライフデザインの融合で、新しい体験価値を届けます。</p>
-          <a href="#" class="hero-cta">詳しくはこちら</a>
-        </div>
-      </div>
-      <div class="hero-slide" data-slide="1">
-        <div class="hero-slide-bg hero-bg-2"></div>
-        <div class="hero-slide-content">
-          <span class="hero-label">5G / 6G</span>
-          <h2 class="hero-title">次世代通信で、<br>社会の可能性を広げる。</h2>
-          <p class="hero-description">5G SAの全国展開と6G研究開発を推進しています。</p>
-          <a href="#" class="hero-cta">通信・インフラ事業</a>
-        </div>
-      </div>
-      <div class="hero-slide" data-slide="2">
-        <div class="hero-slide-bg hero-bg-3"></div>
-        <div class="hero-slide-content">
-          <span class="hero-label">サステナビリティ</span>
-          <h2 class="hero-title">カーボンニュートラルの<br>実現に向けて。</h2>
-          <p class="hero-description">2050年のCO2排出量実質ゼロを目指し、取り組みを加速します。</p>
-          <a href="#" class="hero-cta">サステナビリティ</a>
-        </div>
-      </div>
-    </div>
-    <div class="hero-controls">
-      <button class="hero-dot active" data-slide="0" aria-label="スライド1"></button>
-      <button class="hero-dot" data-slide="1" aria-label="スライド2"></button>
-      <button class="hero-dot" data-slide="2" aria-label="スライド3"></button>
-    </div>
-    <button class="hero-arrow hero-arrow-prev" id="heroPrev" aria-label="前へ">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <button class="hero-arrow hero-arrow-next" id="heroNext" aria-label="次へ">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
-  </section>
+  <!-- Main Content -->
+  <main class="main" id="mainContent">
 
-  <!-- Services Section -->
-  <section class="services" id="services">
-    <div class="container">
-      <h2 class="section-title">サービス</h2>
-      <p class="section-subtitle">KDDIグループの主要サービスをご紹介します</p>
-      <div class="services-grid">
-        <a href="#" class="service-card">
-          <div class="service-icon service-icon-au">au</div>
-          <h3 class="service-name">au</h3>
-          <p class="service-desc">モバイル通信サービス。5G対応の最新プランをご用意しています。</p>
-        </a>
-        <a href="#" class="service-card">
-          <div class="service-icon service-icon-uq">UQ</div>
-          <h3 class="service-name">UQ mobile</h3>
-          <p class="service-desc">格安スマホ・格安SIM。シンプルでおトクな料金プランが特長です。</p>
-        </a>
-        <a href="#" class="service-card">
-          <div class="service-icon service-icon-povo">povo</div>
-          <h3 class="service-name">povo</h3>
-          <p class="service-desc">基本料0円から始められる、自分でつくるスマホプランです。</p>
-        </a>
-        <a href="#" class="service-card">
-          <div class="service-icon service-icon-hikari">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </div>
-          <h3 class="service-name">auひかり</h3>
-          <p class="service-desc">高速光回線インターネット。快適な通信環境をお届けします。</p>
-        </a>
-        <a href="#" class="service-card">
-          <div class="service-icon service-icon-pay">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-          </div>
-          <h3 class="service-name">au PAY</h3>
-          <p class="service-desc">Pontaポイントがたまる・つかえるキャッシュレス決済サービス。</p>
-        </a>
-        <a href="#" class="service-card">
-          <div class="service-icon service-icon-biz">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-          </div>
-          <h3 class="service-name">法人サービス</h3>
-          <p class="service-desc">企業のDX推進を支援。クラウド、IoT、セキュリティソリューション。</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- News Section -->
-  <section class="news-section" id="news">
-    <div class="container">
-      <h2 class="section-title">ニュースリリース</h2>
-      <p class="section-subtitle">KDDIの最新ニュースをお届けします</p>
-      <div class="news-tabs">
-        <button class="news-tab active" data-tab="all">すべて</button>
-        <button class="news-tab" data-tab="service">サービス</button>
-        <button class="news-tab" data-tab="corporate">企業情報</button>
-        <button class="news-tab" data-tab="tech">技術・研究</button>
-      </div>
-      <div class="news-list" id="newsList"></div>
-      <div class="news-more">
-        <a href="#" class="btn-more">ニュースリリース一覧</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Corporate Section -->
-  <section class="corporate" id="corporate">
-    <div class="container">
-      <h2 class="section-title">企業情報</h2>
-      <p class="section-subtitle">KDDIグループについて</p>
-      <div class="corporate-grid">
-        <a href="#" class="corporate-card">
-          <div class="corporate-card-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          </div>
-          <h3 class="corporate-card-title">会社概要</h3>
-          <p class="corporate-card-desc">社名、設立、本社所在地、資本金など基本情報をご確認いただけます。</p>
-        </a>
-        <a href="#" class="corporate-card">
-          <div class="corporate-card-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3 class="corporate-card-title">経営陣</h3>
-          <p class="corporate-card-desc">代表取締役社長をはじめとする経営陣のプロフィールをご紹介します。</p>
-        </a>
-        <a href="#" class="corporate-card">
-          <div class="corporate-card-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </div>
-          <h3 class="corporate-card-title">グローバル事業</h3>
-          <p class="corporate-card-desc">世界各地で展開する事業と、海外拠点の情報をご覧いただけます。</p>
-        </a>
-        <a href="#" class="corporate-card">
-          <div class="corporate-card-icon">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          </div>
-          <h3 class="corporate-card-title">CSR・サステナビリティ</h3>
-          <p class="corporate-card-desc">環境・社会への取り組みや、コーポレートガバナンスについてご紹介します。</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- IR Section -->
-  <section class="ir-section" id="ir">
-    <div class="container">
-      <div class="ir-inner">
-        <div class="ir-content">
-          <h2 class="section-title section-title-light">IR情報</h2>
-          <p class="ir-description">株主・投資家の皆さまに向けて、経営戦略、財務情報、株式情報などをご提供しています。</p>
-          <div class="ir-highlights">
-            <div class="ir-highlight">
-              <span class="ir-highlight-value" id="irRevenue">5兆9,167億円</span>
-              <span class="ir-highlight-label">連結売上高（2025年3月期）</span>
-            </div>
-            <div class="ir-highlight">
-              <span class="ir-highlight-value" id="irProfit">1兆1,118億円</span>
-              <span class="ir-highlight-label">連結営業利益（2025年3月期）</span>
+    <!-- ===== Home Page ===== -->
+    <div class="page page-home active" id="pageHome">
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+          <h1 class="hero-title">最高のホテルを、<br>最高の価格で。</h1>
+          <p class="hero-subtitle">国内外の厳選されたホテルから、あなたにぴったりの一室を見つけましょう。</p>
+          <!-- Search Box -->
+          <div class="search-box">
+            <div class="search-row">
+              <div class="search-field">
+                <label class="search-label">目的地</label>
+                <input type="text" class="search-input" id="homeDestination" placeholder="都市名・ホテル名">
+              </div>
+              <div class="search-field">
+                <label class="search-label">チェックイン</label>
+                <input type="date" class="search-input" id="homeCheckin">
+              </div>
+              <div class="search-field">
+                <label class="search-label">チェックアウト</label>
+                <input type="date" class="search-input" id="homeCheckout">
+              </div>
+              <div class="search-field search-field-small">
+                <label class="search-label">人数</label>
+                <select class="search-input" id="homeGuests">
+                  <option value="1">1名</option>
+                  <option value="2" selected>2名</option>
+                  <option value="3">3名</option>
+                  <option value="4">4名</option>
+                </select>
+              </div>
+              <button class="btn-search" id="homeSearchBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                検索
+              </button>
             </div>
           </div>
-          <div class="ir-links">
-            <a href="#" class="btn-ir">決算情報</a>
-            <a href="#" class="btn-ir btn-ir-outline">株主総会</a>
-            <a href="#" class="btn-ir btn-ir-outline">株式情報</a>
+        </div>
+      </section>
+
+      <!-- Featured Hotels -->
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">人気のホテル</h2>
+          <p class="section-subtitle">お客様に選ばれ続ける、おすすめの宿泊施設</p>
+          <div class="hotel-grid" id="featuredHotels"></div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="section section-alt">
+        <div class="container">
+          <h2 class="section-title">StayEaseが選ばれる理由</h2>
+          <p class="section-subtitle">快適な旅のための充実したサービス</p>
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <h3 class="feature-title">国内外5,000+施設</h3>
+              <p class="feature-desc">国内の温泉旅館から海外のリゾートホテルまで、幅広い選択肢をご用意。</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v4M12 19v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M1 12h4M19 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              </div>
+              <h3 class="feature-title">最低価格保証</h3>
+              <p class="feature-desc">他サイトより高い場合は差額を返金。いつでもお得にご予約いただけます。</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <h3 class="feature-title">無料キャンセル</h3>
+              <p class="feature-desc">多くのプランで宿泊日前日までキャンセル無料。安心してご予約ください。</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <h3 class="feature-title">24時間サポート</h3>
+              <p class="feature-desc">チャット・電話でいつでもご相談OK。旅先でのトラブルも安心です。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== Search/Results Page ===== -->
+    <div class="page page-search" id="pageSearch">
+      <div class="container">
+        <!-- Search Filters -->
+        <div class="search-filters">
+          <div class="search-row">
+            <div class="search-field">
+              <label class="search-label">目的地</label>
+              <input type="text" class="search-input" id="searchDestination" placeholder="都市名・ホテル名">
+            </div>
+            <div class="search-field">
+              <label class="search-label">チェックイン</label>
+              <input type="date" class="search-input" id="searchCheckin">
+            </div>
+            <div class="search-field">
+              <label class="search-label">チェックアウト</label>
+              <input type="date" class="search-input" id="searchCheckout">
+            </div>
+            <div class="search-field search-field-small">
+              <label class="search-label">人数</label>
+              <select class="search-input" id="searchGuests">
+                <option value="1">1名</option>
+                <option value="2" selected>2名</option>
+                <option value="3">3名</option>
+                <option value="4">4名</option>
+              </select>
+            </div>
+            <button class="btn-search" id="searchPageBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              検索
+            </button>
+          </div>
+          <!-- Filter Options -->
+          <div class="filter-row">
+            <div class="filter-group">
+              <label class="filter-label">価格帯</label>
+              <select class="filter-select" id="filterPrice">
+                <option value="all">すべて</option>
+                <option value="budget">~10,000円</option>
+                <option value="mid">10,000~25,000円</option>
+                <option value="high">25,000~50,000円</option>
+                <option value="luxury">50,000円~</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label class="filter-label">評価</label>
+              <select class="filter-select" id="filterRating">
+                <option value="all">すべて</option>
+                <option value="4.5">4.5以上</option>
+                <option value="4.0">4.0以上</option>
+                <option value="3.5">3.5以上</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label class="filter-label">並び替え</label>
+              <select class="filter-select" id="filterSort">
+                <option value="recommended">おすすめ順</option>
+                <option value="price-low">価格が安い順</option>
+                <option value="price-high">価格が高い順</option>
+                <option value="rating">評価が高い順</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results-header">
+          <span id="resultsCount">0件</span>のホテルが見つかりました
+        </div>
+        <div class="hotel-list" id="hotelList"></div>
+      </div>
+    </div>
+
+    <!-- ===== Hotel Detail Page ===== -->
+    <div class="page page-detail" id="pageDetail">
+      <div class="container">
+        <button class="btn-back" id="btnBack">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          検索結果に戻る
+        </button>
+        <div id="hotelDetail"></div>
+      </div>
+    </div>
+
+    <!-- ===== Booking Form Page ===== -->
+    <div class="page page-booking" id="pageBooking">
+      <div class="container">
+        <h2 class="page-title">予約情報入力</h2>
+        <div class="booking-layout">
+          <div class="booking-form-section">
+            <form id="bookingForm" novalidate>
+              <div class="form-section">
+                <h3 class="form-section-title">宿泊者情報</h3>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="guestLastName">姓 <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="guestLastName" placeholder="山田" required>
+                    <span class="form-error" id="errorLastName"></span>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="guestFirstName">名 <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="guestFirstName" placeholder="太郎" required>
+                    <span class="form-error" id="errorFirstName"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="guestEmail">メールアドレス <span class="required">*</span></label>
+                  <input type="email" class="form-input" id="guestEmail" placeholder="example@email.com" required>
+                  <span class="form-error" id="errorEmail"></span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="guestPhone">電話番号 <span class="required">*</span></label>
+                  <input type="tel" class="form-input" id="guestPhone" placeholder="090-1234-5678" required>
+                  <span class="form-error" id="errorPhone"></span>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="form-section-title">お支払い情報</h3>
+                <div class="form-group">
+                  <label class="form-label" for="cardNumber">カード番号 <span class="required">*</span></label>
+                  <input type="text" class="form-input" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                  <span class="form-error" id="errorCard"></span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="cardExpiry">有効期限 <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
+                    <span class="form-error" id="errorExpiry"></span>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="cardCvc">セキュリティコード <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="cardCvc" placeholder="123" maxlength="4" required>
+                    <span class="form-error" id="errorCvc"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3 class="form-section-title">その他</h3>
+                <div class="form-group">
+                  <label class="form-label" for="specialRequests">特別リクエスト（任意）</label>
+                  <textarea class="form-textarea" id="specialRequests" rows="3" placeholder="アレルギー、アーリーチェックインなどのご要望"></textarea>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-confirm" id="btnConfirmBooking">予約を確定する</button>
+            </form>
+          </div>
+
+          <div class="booking-summary-section">
+            <div class="booking-summary" id="bookingSummary"></div>
           </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Sustainability Section -->
-  <section class="sustainability" id="sustainability">
-    <div class="container">
-      <h2 class="section-title">サステナビリティ</h2>
-      <p class="section-subtitle">持続可能な社会の実現に向けたKDDIの取り組み</p>
-      <div class="sustainability-grid">
-        <div class="sustainability-card">
-          <div class="sustainability-card-number">01</div>
-          <h3 class="sustainability-card-title">カーボンニュートラル</h3>
-          <p class="sustainability-card-desc">2050年のCO2排出量ネットゼロに向け、再生可能エネルギーの導入や省エネ施策を推進。</p>
-        </div>
-        <div class="sustainability-card">
-          <div class="sustainability-card-number">02</div>
-          <h3 class="sustainability-card-title">地域共創</h3>
-          <p class="sustainability-card-desc">通信インフラを活かした地域課題解決や、デジタルデバイド解消に取り組んでいます。</p>
-        </div>
-        <div class="sustainability-card">
-          <div class="sustainability-card-number">03</div>
-          <h3 class="sustainability-card-title">多様性の推進</h3>
-          <p class="sustainability-card-desc">ダイバーシティ&インクルージョンを推進し、多様な人材が活躍できる環境を整備。</p>
-        </div>
+    <!-- ===== Confirmation Page ===== -->
+    <div class="page page-confirmation" id="pageConfirmation">
+      <div class="container">
+        <div class="confirmation-card" id="confirmationContent"></div>
       </div>
     </div>
-  </section>
+
+    <!-- ===== Bookings List Page ===== -->
+    <div class="page page-bookings" id="pageBookings">
+      <div class="container">
+        <h2 class="page-title">予約一覧</h2>
+        <div id="bookingsList"></div>
+      </div>
+    </div>
+
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <h4 class="footer-heading">個人のお客さま</h4>
+          <div class="footer-logo">
+            <span class="logo-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </span>
+            StayEase
+          </div>
+          <p class="footer-desc">最高のホテルを、最高の価格で。あなたの理想の旅をサポートします。</p>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading">サービス</h4>
           <ul class="footer-links">
-            <li><a href="#">au</a></li>
-            <li><a href="#">UQ mobile</a></li>
-            <li><a href="#">povo</a></li>
-            <li><a href="#">auひかり</a></li>
-            <li><a href="#">au PAY / au PAY カード</a></li>
-            <li><a href="#">au PAY マーケット</a></li>
+            <li><a href="#">ホテル検索</a></li>
+            <li><a href="#">旅館・温泉</a></li>
+            <li><a href="#">ビジネスホテル</a></li>
+            <li><a href="#">リゾートホテル</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4 class="footer-heading">法人のお客さま</h4>
+          <h4 class="footer-heading">サポート</h4>
           <ul class="footer-links">
-            <li><a href="#">モバイル</a></li>
-            <li><a href="#">ネットワーク</a></li>
-            <li><a href="#">クラウド</a></li>
-            <li><a href="#">IoT</a></li>
-            <li><a href="#">セキュリティ</a></li>
-            <li><a href="#">DXソリューション</a></li>
+            <li><a href="#">よくある質問</a></li>
+            <li><a href="#">キャンセルポリシー</a></li>
+            <li><a href="#">お問い合わせ</a></li>
+            <li><a href="#">利用規約</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h4 class="footer-heading">企業情報</h4>
+          <h4 class="footer-heading">会社情報</h4>
           <ul class="footer-links">
             <li><a href="#">会社概要</a></li>
-            <li><a href="#">経営陣</a></li>
-            <li><a href="#">グループ企業</a></li>
+            <li><a href="#">プライバシーポリシー</a></li>
             <li><a href="#">採用情報</a></li>
-            <li><a href="#">ニュースリリース</a></li>
-            <li><a href="#">お問い合わせ</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 class="footer-heading">IR・サステナビリティ</h4>
-          <ul class="footer-links">
-            <li><a href="#">IR情報</a></li>
-            <li><a href="#">決算情報</a></li>
-            <li><a href="#">株式情報</a></li>
-            <li><a href="#">サステナビリティ</a></li>
-            <li><a href="#">コーポレートガバナンス</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <div class="footer-logo">KDDI</div>
-        <div class="footer-legal">
-          <a href="#">プライバシーポリシー</a>
-          <a href="#">利用規約</a>
-          <a href="#">サイトマップ</a>
-          <a href="#">サイトポリシー</a>
-        </div>
-        <p class="footer-copyright">&copy; KDDI CORPORATION, All Rights Reserved.</p>
+        <p>&copy; 2026 StayEase. All Rights Reserved.</p>
       </div>
     </div>
   </footer>
