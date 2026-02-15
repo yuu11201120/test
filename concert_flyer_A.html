@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>歌の翼に〜 コンサートチラシ パターンA</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -18,261 +18,311 @@
     width: 210mm;
     height: 297mm;
     margin: 0 auto;
-    font-family: 'Noto Serif JP', serif;
+    font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
     overflow: hidden;
     position: relative;
-    background: linear-gradient(180deg,
-      #e8f4fd 0%,
-      #b8ddf5 15%,
-      #87ceeb 30%,
-      #a8d8f0 50%,
-      #d4ecf7 65%,
-      #f0f8ff 80%,
+    background: linear-gradient(175deg,
+      #daeef8 0%,
+      #c4e3f4 8%,
+      #a0d4ee 18%,
+      #7ec8ea 30%,
+      #9ad2ed 42%,
+      #c0e2f4 55%,
+      #deeef7 68%,
+      #eef6fb 78%,
+      #f8fbfd 88%,
       #ffffff 100%
     );
     color: #2c3e50;
   }
 
-  /* Clouds */
-  .cloud {
+  /* Soft radial light from top center */
+  .light-overlay {
     position: absolute;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 50%;
-  }
-  .cloud::before, .cloud::after {
-    content: '';
-    position: absolute;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 50%;
-  }
-  .cloud-1 {
-    width: 120px; height: 40px;
-    top: 30px; left: 20px;
-  }
-  .cloud-1::before { width: 50px; height: 50px; top: -25px; left: 20px; }
-  .cloud-1::after { width: 70px; height: 60px; top: -30px; left: 45px; }
-  .cloud-2 {
-    width: 100px; height: 35px;
-    top: 80px; right: 60px;
-  }
-  .cloud-2::before { width: 45px; height: 45px; top: -20px; left: 15px; }
-  .cloud-2::after { width: 60px; height: 50px; top: -25px; left: 35px; }
-  .cloud-3 {
-    width: 80px; height: 28px;
-    top: 160px; left: 140px;
-    opacity: 0.5;
-  }
-  .cloud-3::before { width: 35px; height: 35px; top: -18px; left: 10px; }
-  .cloud-3::after { width: 50px; height: 40px; top: -20px; left: 28px; }
-
-  /* Wings SVG */
-  .wings-container {
-    position: absolute;
-    top: 60px;
+    top: -80px;
     left: 50%;
     transform: translateX(-50%);
-    width: 500px;
-    height: 200px;
-    opacity: 0.15;
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 70%);
+    z-index: 1;
+  }
+
+  /* Elegant wings - detailed feather style */
+  .wings-container {
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 580px;
+    height: 220px;
+    opacity: 0.10;
+    z-index: 1;
+  }
+
+  /* Floating feathers - more delicate */
+  .feather-svg {
+    position: absolute;
+    z-index: 1;
   }
 
   /* Title area */
   .title-section {
     position: relative;
     text-align: center;
-    padding-top: 45px;
+    padding-top: 52px;
     z-index: 2;
   }
 
-  .main-title {
-    font-size: 42px;
-    font-weight: 700;
-    color: #1a5276;
-    letter-spacing: 8px;
-    text-shadow: 0 2px 10px rgba(255,255,255,0.8);
-    margin-bottom: 4px;
-  }
-
-  .title-sub {
-    font-size: 14px;
-    color: #2980b9;
-    letter-spacing: 4px;
-    font-weight: 400;
-  }
-
-  .title-line {
-    width: 280px;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #2980b9, transparent);
-    margin: 10px auto;
-  }
-
-  /* Concert info */
   .concert-label {
-    font-size: 16px;
-    color: #1a5276;
-    letter-spacing: 6px;
-    font-weight: 500;
-    margin-bottom: 6px;
+    font-size: 12px;
+    color: #5a8fad;
+    letter-spacing: 10px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    font-family: 'Noto Sans JP', sans-serif;
   }
 
-  /* Date & Venue */
+  .main-title {
+    font-size: 50px;
+    font-weight: 700;
+    color: #1b4a6b;
+    letter-spacing: 12px;
+    text-shadow: 0 1px 20px rgba(255,255,255,0.9);
+    margin-bottom: 8px;
+  }
+
+  .title-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  .ornament-line {
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #8ab5cc);
+  }
+
+  .ornament-line-r {
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, #8ab5cc, transparent);
+  }
+
+  .ornament-diamond {
+    width: 6px;
+    height: 6px;
+    background: #b5975a;
+    transform: rotate(45deg);
+    opacity: 0.6;
+  }
+
+  /* Info section */
   .info-section {
     position: relative;
     z-index: 2;
     text-align: center;
-    margin-top: 8px;
+    margin-top: 16px;
   }
 
   .date-text {
-    font-size: 22px;
+    font-size: 28px;
     font-weight: 600;
-    color: #1a5276;
-    letter-spacing: 2px;
+    color: #1b4a6b;
+    letter-spacing: 3px;
+  }
+
+  .date-day {
+    font-size: 18px;
+    font-weight: 400;
   }
 
   .time-text {
-    font-size: 15px;
-    color: #34495e;
-    margin-top: 2px;
+    font-size: 16px;
+    color: #4a7a94;
+    margin-top: 4px;
+    letter-spacing: 1px;
+    font-weight: 400;
   }
 
   .venue-text {
-    font-size: 15px;
-    color: #34495e;
-    margin-top: 6px;
-    letter-spacing: 1px;
+    font-size: 17px;
+    color: #3a6a84;
+    margin-top: 10px;
+    letter-spacing: 2px;
+    font-weight: 500;
   }
 
   .venue-hall {
-    font-size: 13px;
-    color: #5d6d7e;
+    font-size: 14px;
+    color: #6a96ab;
+    font-weight: 400;
+    margin-top: 1px;
   }
 
   .price-badge {
     display: inline-block;
-    margin-top: 8px;
-    padding: 4px 28px;
-    border: 2px solid #2980b9;
-    border-radius: 25px;
-    font-size: 16px;
+    margin-top: 10px;
+    padding: 6px 34px;
+    border: 1.5px solid rgba(181,151,90,0.45);
+    border-radius: 30px;
+    font-size: 18px;
     font-weight: 600;
-    color: #1a5276;
-    background: rgba(255,255,255,0.6);
-    letter-spacing: 2px;
+    color: #1b4a6b;
+    background: rgba(255,255,255,0.55);
+    letter-spacing: 3px;
+    backdrop-filter: blur(4px);
   }
 
-  /* Performers section */
+  /* Performers */
   .performers-section {
     position: relative;
     z-index: 2;
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-top: 14px;
-    padding: 0 20px;
+    gap: 14px;
+    margin-top: 18px;
+    padding: 0 22px;
   }
 
   .performer-card {
-    width: 155px;
+    width: 152px;
     text-align: center;
   }
 
   .photo-placeholder {
-    width: 120px;
-    height: 150px;
+    width: 118px;
+    height: 148px;
     margin: 0 auto 8px;
-    border: 2px solid rgba(41, 128, 185, 0.3);
-    border-radius: 8px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(184,221,245,0.3));
+    border: 1px solid rgba(138,181,204,0.35);
+    border-radius: 6px;
+    background: linear-gradient(160deg, rgba(255,255,255,0.75), rgba(192,226,244,0.25));
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #85c1e9;
-    font-size: 11px;
+    color: #a3cfe0;
+    font-size: 10px;
     font-family: 'Noto Sans JP', sans-serif;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 3px 15px rgba(27,74,107,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.3), transparent);
   }
 
   .performer-role {
-    font-size: 11px;
-    color: #2980b9;
+    font-size: 12px;
+    color: #6a96ab;
     font-weight: 500;
-    letter-spacing: 2px;
-    margin-bottom: 2px;
+    letter-spacing: 3px;
+    margin-bottom: 3px;
   }
 
   .performer-name {
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 600;
-    color: #1a5276;
-    letter-spacing: 2px;
+    color: #1b4a6b;
+    letter-spacing: 3px;
   }
 
   .performer-note {
-    font-size: 9px;
-    color: #7f8c8d;
+    font-size: 10px;
+    color: #8aa8b8;
     margin-top: 1px;
+    font-weight: 400;
   }
 
   .profile-placeholder {
-    width: 120px;
-    min-height: 45px;
-    margin: 5px auto 0;
-    border: 1px dashed rgba(41, 128, 185, 0.25);
+    width: 118px;
+    min-height: 48px;
+    margin: 6px auto 0;
+    border: 1px dashed rgba(138,181,204,0.3);
     border-radius: 4px;
-    background: rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.35);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #85c1e9;
+    color: #a3cfe0;
     font-size: 9px;
     font-family: 'Noto Sans JP', sans-serif;
     padding: 4px;
   }
 
-  /* Program section */
+  /* Program */
   .program-section {
     position: relative;
     z-index: 2;
-    margin-top: 14px;
-    padding: 0 60px;
+    margin-top: 18px;
+    padding: 0 55px;
   }
 
   .section-title {
     text-align: center;
-    font-size: 15px;
-    font-weight: 600;
-    color: #1a5276;
-    letter-spacing: 4px;
-    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #5a8fad;
+    letter-spacing: 6px;
+    margin-bottom: 4px;
   }
 
-  .section-title-line {
-    width: 60px;
+  .section-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .section-line {
+    width: 40px;
     height: 1px;
-    background: #2980b9;
-    margin: 0 auto 10px;
+    background: linear-gradient(90deg, transparent, rgba(181,151,90,0.4));
+  }
+
+  .section-line-r {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(181,151,90,0.4), transparent);
+  }
+
+  .section-dot {
+    width: 3px;
+    height: 3px;
+    background: #b5975a;
+    border-radius: 50%;
+    opacity: 0.5;
   }
 
   .program-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 3px 30px;
+    gap: 2px 36px;
     text-align: center;
   }
 
   .program-item {
-    font-size: 12.5px;
-    color: #34495e;
-    line-height: 1.7;
+    font-size: 14px;
+    color: #3a5a6e;
+    line-height: 1.8;
     font-weight: 400;
   }
 
   .program-composer {
-    font-size: 10px;
-    color: #7f8c8d;
+    font-size: 11px;
+    color: #8aa8b8;
+    font-weight: 300;
   }
 
   /* Footer */
@@ -282,103 +332,123 @@
     left: 0;
     right: 0;
     z-index: 2;
-    background: linear-gradient(180deg, transparent, rgba(135, 206, 235, 0.15));
-    padding: 12px 40px 18px;
+    padding: 10px 45px 12px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
   }
 
+  .footer-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(138,181,204,0.25), transparent);
+  }
+
   .organizer {
-    font-size: 12px;
-    color: #5d6d7e;
+    font-size: 14px;
+    color: #4a7a94;
+    font-weight: 400;
   }
 
   .organizer-label {
-    font-size: 10px;
-    color: #85929e;
-    letter-spacing: 2px;
+    font-size: 11px;
+    color: #8aa8b8;
+    letter-spacing: 3px;
+    font-weight: 400;
+    margin-bottom: 2px;
   }
 
   .contact {
     text-align: right;
-    font-family: 'Noto Sans JP', sans-serif;
   }
 
   .contact-label {
-    font-size: 10px;
-    color: #85929e;
-    letter-spacing: 2px;
+    font-size: 11px;
+    color: #8aa8b8;
+    letter-spacing: 3px;
+    font-weight: 400;
+    margin-bottom: 2px;
   }
 
   .contact-info {
-    font-size: 13px;
-    color: #5d6d7e;
-    margin-top: 1px;
-  }
-
-  /* Decorative feathers */
-  .feather {
-    position: absolute;
-    z-index: 1;
-    opacity: 0.12;
+    font-size: 16px;
+    color: #4a7a94;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
   }
 </style>
 </head>
 <body>
 
-  <!-- Clouds -->
-  <div class="cloud cloud-1"></div>
-  <div class="cloud cloud-2"></div>
-  <div class="cloud cloud-3"></div>
+  <!-- Soft light overlay -->
+  <div class="light-overlay"></div>
 
-  <!-- Wings watermark -->
+  <!-- Elegant wings watermark -->
   <div class="wings-container">
-    <svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
-      <!-- Left wing -->
-      <g fill="#1a5276" opacity="0.6">
-        <ellipse cx="180" cy="100" rx="140" ry="25" transform="rotate(-10 180 100)"/>
-        <ellipse cx="170" cy="85" rx="130" ry="20" transform="rotate(-18 170 85)"/>
-        <ellipse cx="165" cy="70" rx="115" ry="17" transform="rotate(-26 165 70)"/>
-        <ellipse cx="160" cy="58" rx="95" ry="14" transform="rotate(-35 160 58)"/>
-        <ellipse cx="158" cy="48" rx="75" ry="11" transform="rotate(-42 158 48)"/>
+    <svg viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg">
+      <!-- Left wing - graceful curves -->
+      <g fill="none" stroke="#1b4a6b" stroke-width="1.2" opacity="0.7">
+        <path d="M280 140 C260 130 200 110 120 105 C160 108 220 115 280 140"/>
+        <path d="M280 140 C255 120 185 85 95 70 C145 80 210 100 280 140"/>
+        <path d="M280 140 C250 110 175 60 80 38 C135 55 200 85 280 140"/>
+        <path d="M280 140 C248 105 170 45 68 15 C130 35 195 72 280 140"/>
+        <path d="M280 140 C250 100 180 40 95 10 C145 25 210 65 280 140"/>
+      </g>
+      <g fill="#1b4a6b" opacity="0.15">
+        <path d="M280 140 C260 128 195 105 110 100 C195 100 250 118 280 140Z"/>
+        <path d="M280 140 C252 115 180 75 85 55 C175 68 240 100 280 140Z"/>
+        <path d="M280 140 C248 102 170 50 70 25 C160 45 230 82 280 140Z"/>
       </g>
       <!-- Right wing -->
-      <g fill="#1a5276" opacity="0.6">
-        <ellipse cx="320" cy="100" rx="140" ry="25" transform="rotate(10 320 100)"/>
-        <ellipse cx="330" cy="85" rx="130" ry="20" transform="rotate(18 330 85)"/>
-        <ellipse cx="335" cy="70" rx="115" ry="17" transform="rotate(26 335 70)"/>
-        <ellipse cx="340" cy="58" rx="95" ry="14" transform="rotate(35 340 58)"/>
-        <ellipse cx="342" cy="48" rx="75" ry="11" transform="rotate(42 342 48)"/>
+      <g fill="none" stroke="#1b4a6b" stroke-width="1.2" opacity="0.7">
+        <path d="M300 140 C320 130 380 110 460 105 C420 108 360 115 300 140"/>
+        <path d="M300 140 C325 120 395 85 485 70 C435 80 370 100 300 140"/>
+        <path d="M300 140 C330 110 405 60 500 38 C445 55 380 85 300 140"/>
+        <path d="M300 140 C332 105 410 45 512 15 C450 35 385 72 300 140"/>
+        <path d="M300 140 C330 100 400 40 485 10 C435 25 370 65 300 140"/>
+      </g>
+      <g fill="#1b4a6b" opacity="0.15">
+        <path d="M300 140 C320 128 385 105 470 100 C385 100 330 118 300 140Z"/>
+        <path d="M300 140 C328 115 400 75 495 55 C405 68 340 100 300 140Z"/>
+        <path d="M300 140 C332 102 410 50 510 25 C420 45 350 82 300 140Z"/>
       </g>
     </svg>
   </div>
 
-  <!-- Decorative feathers -->
-  <svg class="feather" style="top:350px; right:30px; width:60px;" viewBox="0 0 30 80" xmlns="http://www.w3.org/2000/svg">
-    <path d="M15 0 C15 0 5 20 5 40 C5 60 15 80 15 80 C15 80 25 60 25 40 C25 20 15 0 15 0Z" fill="#2980b9"/>
-    <line x1="15" y1="0" x2="15" y2="80" stroke="#1a5276" stroke-width="0.5"/>
+  <!-- Delicate floating feathers -->
+  <svg class="feather-svg" style="top:320px; right:28px; width:55px; opacity:0.07; transform:rotate(-18deg);" viewBox="0 0 40 120" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 0 C20 5 8 30 8 60 C8 90 20 120 20 120 C20 120 32 90 32 60 C32 30 20 5 20 0Z" fill="#4a8aaa" stroke="#4a8aaa" stroke-width="0.3"/>
+    <line x1="20" y1="5" x2="20" y2="118" stroke="#4a8aaa" stroke-width="0.5" opacity="0.5"/>
+    <path d="M20 30 C16 35 10 45 10 60" fill="none" stroke="#4a8aaa" stroke-width="0.3" opacity="0.4"/>
+    <path d="M20 30 C24 35 30 45 30 60" fill="none" stroke="#4a8aaa" stroke-width="0.3" opacity="0.4"/>
   </svg>
-  <svg class="feather" style="top:620px; left:25px; width:45px; transform:rotate(25deg);" viewBox="0 0 30 80" xmlns="http://www.w3.org/2000/svg">
-    <path d="M15 0 C15 0 5 20 5 40 C5 60 15 80 15 80 C15 80 25 60 25 40 C25 20 15 0 15 0Z" fill="#2980b9"/>
-    <line x1="15" y1="0" x2="15" y2="80" stroke="#1a5276" stroke-width="0.5"/>
+  <svg class="feather-svg" style="top:580px; left:22px; width:40px; opacity:0.06; transform:rotate(22deg);" viewBox="0 0 40 120" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 0 C20 5 8 30 8 60 C8 90 20 120 20 120 C20 120 32 90 32 60 C32 30 20 5 20 0Z" fill="#4a8aaa" stroke="#4a8aaa" stroke-width="0.3"/>
+    <line x1="20" y1="5" x2="20" y2="118" stroke="#4a8aaa" stroke-width="0.5" opacity="0.5"/>
   </svg>
-  <svg class="feather" style="bottom:120px; right:50px; width:35px; transform:rotate(-15deg);" viewBox="0 0 30 80" xmlns="http://www.w3.org/2000/svg">
-    <path d="M15 0 C15 0 5 20 5 40 C5 60 15 80 15 80 C15 80 25 60 25 40 C25 20 15 0 15 0Z" fill="#2980b9"/>
-    <line x1="15" y1="0" x2="15" y2="80" stroke="#1a5276" stroke-width="0.5"/>
+  <svg class="feather-svg" style="bottom:140px; right:40px; width:30px; opacity:0.05; transform:rotate(-10deg);" viewBox="0 0 40 120" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 0 C20 5 8 30 8 60 C8 90 20 120 20 120 C20 120 32 90 32 60 C32 30 20 5 20 0Z" fill="#4a8aaa" stroke="#4a8aaa" stroke-width="0.3"/>
+    <line x1="20" y1="5" x2="20" y2="118" stroke="#4a8aaa" stroke-width="0.5" opacity="0.5"/>
   </svg>
 
   <!-- Title -->
   <div class="title-section">
     <div class="concert-label">C O N C E R T</div>
     <h1 class="main-title">歌の翼に〜</h1>
-    <div class="title-sub">Auf Flügeln des Gesanges</div>
-    <div class="title-line"></div>
+    <div class="title-ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line-r"></div>
+    </div>
   </div>
 
   <!-- Date & Info -->
   <div class="info-section">
-    <div class="date-text">2026. 7. 26 <span style="font-size:15px;">日</span></div>
+    <div class="date-text">2026. 7. 26 <span class="date-day">（日）</span></div>
     <div class="time-text">開演 13：30（開場 13：00）</div>
     <div class="venue-text">那珂川町小川総合福祉センター</div>
     <div class="venue-hall">あじさいホール</div>
@@ -416,8 +486,12 @@
 
   <!-- Program -->
   <div class="program-section">
-    <div class="section-title">♪ P R O G R A M ♪</div>
-    <div class="section-title-line"></div>
+    <div class="section-title">P R O G R A M</div>
+    <div class="section-ornament">
+      <div class="section-line"></div>
+      <div class="section-dot"></div>
+      <div class="section-line-r"></div>
+    </div>
     <div class="program-list">
       <div class="program-item">歌の翼に <span class="program-composer">メンデルスゾーン</span></div>
       <div class="program-item">手紙の二重唱 <span class="program-composer">モーツァルト</span></div>
@@ -430,6 +504,7 @@
 
   <!-- Footer -->
   <div class="footer-section">
+    <div class="footer-line"></div>
     <div class="organizer">
       <div class="organizer-label">主 催</div>
       <div>藍の会</div>
