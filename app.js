@@ -212,49 +212,102 @@ const Store = {
 // ニュース取得
 // ============================================
 const NewsService = {
-  // KDDIニュースRSSをCORSプロキシ経由で取得を試みる
-  async fetchFromRSS() {
-    const RSS_URL = 'https://news.kddi.com/rss/kddi/news/top';
-    const PROXY = 'https://corsproxy.io/?url=';
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 6000);
+  // KDDIニュースリリース公式RSSフィードURL
+  RSS_URLS: [
+    'https://news.kddi.com/kddi/corporate/newsrelease/rss/kddi_news_release.xml',
+    'https://newsroom.kddi.com/news/newsrelease.xml'
+  ],
 
+  // CORSプロキシ一覧（順番に試す）
+  PROXIES: [
+    url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url => `https://cors-proxy.fringe.zone/${url}`
+  ],
+
+  async fetchWithTimeout(fetchUrl, timeoutMs = 8000) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
-      const res = await fetch(PROXY + encodeURIComponent(RSS_URL), {
-        signal: controller.signal
-      });
-      clearTimeout(timeout);
-      if (!res.ok) throw new Error('RSS fetch failed');
-      const text = await res.text();
-      return this.parseRSS(text);
-    } catch {
-      clearTimeout(timeout);
-      return null;
+      const res = await fetch(fetchUrl, { signal: controller.signal });
+      clearTimeout(timer);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.text();
+    } catch (e) {
+      clearTimeout(timer);
+      throw e;
     }
   },
 
-  parseRSS(xml) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(xml, 'application/xml');
+  // RSSフィードを取得（複数URL × 複数プロキシを順番に試す）
+  async fetchFromRSS() {
+    for (const rssUrl of this.RSS_URLS) {
+      for (const proxy of this.PROXIES) {
+        try {
+          const proxyUrl = proxy(rssUrl);
+          setFetchStatus('loading', `RSSを取得中... (${new URL(rssUrl).pathname.split('/').pop()})`);
+          const xml = await this.fetchWithTimeout(proxyUrl);
+
+          // XMLパースエラーチェック
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(xml, 'application/xml');
+          if (doc.querySelector('parsererror')) throw new Error('XML parse error');
+
+          const items = this.parseRSS(doc);
+          if (items.length > 0) {
+            return { items, source: rssUrl };
+          }
+        } catch {
+          // 次のプロキシ/URLへ
+          continue;
+        }
+      }
+    }
+    return null;
+  },
+
+  parseRSS(doc) {
     const items = Array.from(doc.querySelectorAll('item'));
 
     return items.map((item, idx) => {
-      const title = item.querySelector('title')?.textContent || '';
+      const title = item.querySelector('title')?.textContent?.trim() || '';
       const description = item.querySelector('description')?.textContent || '';
-      const pubDate = item.querySelector('pubDate')?.textContent || '';
-      const link = item.querySelector('link')?.textContent || '';
 
-      const dateStr = pubDate ? new Date(pubDate).toISOString().split('T')[0] : '';
-      const category = this.categorize(title + ' ' + description);
+      // RSS 2.0 の <link> はテキストノードではなくノード間に書かれることがあるため
+      // <link> タグと <guid> の両方を試みる
+      const linkEl = item.querySelector('link');
+      let link = '';
+      if (linkEl) {
+        // テキストコンテンツがあればそれを使う
+        link = linkEl.textContent?.trim() || '';
+        // なければ nextSibling（テキストノード）を試みる
+        if (!link && linkEl.nextSibling) {
+          link = linkEl.nextSibling.textContent?.trim() || '';
+        }
+      }
+      if (!link) {
+        link = item.querySelector('guid')?.textContent?.trim() || '';
+      }
+
+      const pubDate = item.querySelector('pubDate')?.textContent || '';
+      let dateStr = '';
+      if (pubDate) {
+        const d = new Date(pubDate);
+        if (!isNaN(d)) dateStr = d.toISOString().split('T')[0];
+      }
+
+      const rawText = title + ' ' + this.stripHtml(description);
+      const category = this.categorize(rawText);
+      const summary = this.stripHtml(description).replace(/\s+/g, ' ').trim().slice(0, 160);
 
       return {
         id: idx + 1,
-        title: title.trim(),
-        summary: this.stripHtml(description).trim().slice(0, 150),
+        title,
+        summary,
         date: dateStr,
         category,
-        source: 'KDDIニュース',
-        url: link.trim()
+        source: 'KDDIニュースリリース',
+        url: link
       };
     }).filter(n => n.title);
   },
@@ -267,29 +320,28 @@ const NewsService = {
 
   categorize(text) {
     const t = text.toLowerCase();
-    if (/5g|sa|スタンドアロン|ローカル5g|衛星/.test(t)) return '5g';
-    if (/決算|ir|株主|業績|売上|配当/.test(t)) return 'ir';
-    if (/csr|環境|カーボン|サステナ|社会|支援|教育/.test(t)) return 'csr';
+    if (/5g|sa|スタンドアロン|ローカル5g|衛星|starlink/.test(t)) return '5g';
+    if (/決算|ir|株主|業績|売上|配当|有価証券|financial/.test(t)) return 'ir';
+    if (/csr|環境|カーボン|サステナ|社会|支援|教育|sdgs/.test(t)) return 'csr';
     return 'service';
   },
 
   async fetchNews() {
-    setFetchStatus('loading', 'ニュースを取得中...');
+    setFetchStatus('loading', 'KDDIニュースリリースRSSを取得中...');
 
-    // RSSから取得を試みる
-    const rssNews = await this.fetchFromRSS();
-    if (rssNews && rssNews.length > 0) {
-      Store.news = rssNews;
+    // 公式RSSから取得
+    const result = await this.fetchFromRSS();
+    if (result && result.items.length > 0) {
+      Store.news = result.items;
       Store._data.lastFetched = new Date().toISOString();
-      setFetchStatus('success', `${rssNews.length}件のニュースを取得しました (KDDI公式RSS)`);
-      return rssNews;
+      setFetchStatus('success', `${result.items.length}件取得（KDDIニュースリリース公式RSS）`);
+      return result.items;
     }
 
-    // フォールバック：モックデータ
-    await new Promise(r => setTimeout(r, 800)); // ローディング演出
+    // フォールバック：サンプルデータ
     Store.news = MOCK_NEWS;
     Store._data.lastFetched = new Date().toISOString();
-    setFetchStatus('success', `${MOCK_NEWS.length}件のニュースを表示中（サンプルデータ）`);
+    setFetchStatus('error', `RSS取得失敗 — サンプルデータを表示中（ネットワーク環境を確認してください）`);
     return MOCK_NEWS;
   }
 };
