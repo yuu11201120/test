@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KDDI ニュース デイリーポスト</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="brand-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#e60012"/>
+            <text x="16" y="22" text-anchor="middle" fill="white" font-size="11" font-weight="bold" font-family="sans-serif">KDDI</text>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>KDDI ニュース デイリーポスト</h1>
+          <p class="brand-sub">毎朝7時に最新ニュースをメールでお届け</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="next-post-badge">
+          <span class="badge-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </span>
+          <span>次回投稿まで <strong id="countdown">--:--:--</strong></span>
+        </div>
+        <button class="btn btn-settings" id="btnSettings" aria-label="設定を開く">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ステータスバー -->
+  <div class="status-bar">
+    <div class="status-inner">
+      <div class="status-item">
+        <span class="status-dot" id="fetchStatusDot"></span>
+        <span id="fetchStatusText">ニュースを取得中...</span>
+      </div>
+      <div class="status-date">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <span id="todayDate">--</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <main class="main">
+    <!-- 左パネル：ニュースリスト -->
+    <section class="panel panel-news">
+      <!-- 検索・フィルター -->
+      <div class="news-controls">
+        <div class="search-box">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="ニュースを検索...">
+          <button class="search-clear" id="searchClear" aria-label="検索をクリア" style="display:none">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+        <div class="filter-tabs" id="filterTabs">
+          <button class="filter-tab active" data-filter="all">すべて</button>
+          <button class="filter-tab" data-filter="5g">5G</button>
+          <button class="filter-tab" data-filter="service">サービス</button>
+          <button class="filter-tab" data-filter="ir">IR</button>
+          <button class="filter-tab" data-filter="csr">CSR</button>
+        </div>
+      </div>
+
+      <!-- ニュース件数 -->
+      <div class="news-meta">
+        <span id="newsCount">0件</span>のニュース
+        <button class="btn-refresh" id="btnRefresh" aria-label="ニュースを更新">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+          </svg>
+          更新
+        </button>
+      </div>
+
+      <!-- ニュースリスト -->
+      <div class="news-list" id="newsList">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>ニュースを取得中...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 右パネル：メールプレビュー -->
+    <section class="panel panel-email">
+      <div class="panel-header">
+        <h2>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          メールプレビュー
+        </h2>
+        <div class="panel-header-actions">
+          <button class="btn btn-sm btn-outline" id="btnRegenerate">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            再生成
+          </button>
+        </div>
+      </div>
+
+      <!-- メール設定 -->
+      <div class="email-config">
+        <div class="email-field">
+          <label for="emailTo">宛先</label>
+          <input type="email" id="emailTo" class="email-input" placeholder="example@company.com" multiple>
+        </div>
+        <div class="email-field">
+          <label for="emailSubject">件名</label>
+          <input type="text" id="emailSubject" class="email-input" id="emailSubject">
+        </div>
+      </div>
+
+      <!-- メール本文プレビュー -->
+      <div class="email-preview" id="emailPreview">
+        <div class="email-body" id="emailBody">
+          <p class="placeholder-text">ニュースが読み込まれるとメール本文が生成されます</p>
+        </div>
+      </div>
+
+      <!-- アクションボタン -->
+      <div class="email-actions">
+        <button class="btn btn-copy" id="btnCopy">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          本文をコピー
+        </button>
+        <button class="btn btn-send" id="btnSend">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          メールを送信
+        </button>
+      </div>
+
+      <!-- 自動投稿設定 -->
+      <div class="auto-post-section">
+        <div class="auto-post-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>自動投稿スケジュール</span>
+        </div>
+        <div class="schedule-display">
+          <div class="schedule-item">
+            <span class="schedule-label">投稿時刻</span>
+            <span class="schedule-value">毎日 07:00</span>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-label">次回投稿</span>
+            <span class="schedule-value" id="nextPostTime">--</span>
+          </div>
+          <div class="schedule-item">
+            <span class="schedule-label">自動投稿</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="autoPostToggle" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+        <div class="manual-trigger">
+          <button class="btn btn-manual" id="btnManualPost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.18l3 .01a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.29 6.29l1.42-1.42a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            今すぐ手動投稿
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 設定モーダル -->
+  <div class="modal-overlay" id="settingsModal" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>設定</h3>
+        <button class="modal-close" id="btnCloseSettings" aria-label="設定を閉じる">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-section">
+          <h4>メール設定</h4>
+          <div class="setting-row">
+            <label for="settingEmailTo">送信先アドレス</label>
+            <input type="email" id="settingEmailTo" class="setting-input" placeholder="recipient@example.com">
+            <small>複数の場合はカンマ区切りで入力</small>
+          </div>
+          <div class="setting-row">
+            <label for="settingEmailCc">CC</label>
+            <input type="email" id="settingEmailCc" class="setting-input" placeholder="cc@example.com">
+          </div>
+          <div class="setting-row">
+            <label for="settingSubjectTemplate">件名テンプレート</label>
+            <input type="text" id="settingSubjectTemplate" class="setting-input" placeholder="【KDDI】{date} ニュース一覧">
+            <small>{date} は実際の日付に置換されます</small>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h4>ニュース設定</h4>
+          <div class="setting-row">
+            <label for="settingMaxNews">最大件数</label>
+            <select id="settingMaxNews" class="setting-select">
+              <option value="5">5件</option>
+              <option value="10" selected>10件</option>
+              <option value="15">15件</option>
+              <option value="20">20件</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <label>ニュースソース</label>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="srcOfficialRelease" checked>
+                KDDIプレスリリース
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="srcIr" checked>
+                IR情報
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="srcService" checked>
+                サービスニュース
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h4>スケジュール設定</h4>
+          <div class="setting-row">
+            <label for="settingPostTime">投稿時刻</label>
+            <input type="time" id="settingPostTime" class="setting-input" value="07:00">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="btnCancelSettings">キャンセル</button>
+        <button class="btn btn-primary" id="btnSaveSettings">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- トースト通知 -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- 選択済みニュース確認 -->
+  <div class="selection-bar" id="selectionBar" style="display:none">
+    <span id="selectionCount">0件選択中</span>
+    <button class="btn btn-sm btn-outline" id="btnSelectAll">すべて選択</button>
+    <button class="btn btn-sm btn-outline" id="btnClearSelection">選択解除</button>
+    <button class="btn btn-sm btn-primary" id="btnAddToEmail">メールに追加</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
